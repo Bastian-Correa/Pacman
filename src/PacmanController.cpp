@@ -9,9 +9,6 @@ PacmanController::~PacmanController() {
 
 }
 
-
-
-
 Move
 PacmanController::getMove(const GameState& game){
 
