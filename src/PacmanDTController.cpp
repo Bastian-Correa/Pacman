@@ -1,7 +1,7 @@
 #include "PacmanDTController.h"
 #include <cstdlib>
 #include <SDL2/SDL.h>
-
+// * Probando, probando, githud cargo correctamente al fin??
 PacmanDTController::PacmanDTController(std::shared_ptr<Character> _character) : Controller(_character) 
 {
 }
