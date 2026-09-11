@@ -111,6 +111,10 @@ Scatter :: Scatter() : Behavior(){
 
 }
 
+// ^ Pasar coordenadas desde el inicio 
+Scatter::Scatter(std::pair<int,int> _target) : Behavior(), target(_target){
+}
+
 Status Scatter::update(){
 	//std::cerr << " Scatter \n" ;
 	if(target.first == -1){

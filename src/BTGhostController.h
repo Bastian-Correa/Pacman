@@ -52,6 +52,7 @@ public:
 
 };
 
+
 class Scatter : public Behavior{
 private:
     std::pair<int,int> target;
@@ -59,6 +60,7 @@ private:
 public:
     virtual Status update() override;
     Scatter();
+    Scatter(std::pair<int,int> _target); // ^ Permite fijar la esquina directamente, sin el fallback de power pill
 
 };
 
