@@ -12,6 +12,15 @@
 #include <random>
 #include <chrono>
 #include "FSM.h"
+#include <queue>
+#include <unordered_set>
+#include <functional>
+
+// ^ Utilidad compartida FSM: cuenta saltos reales entre nodos del laberinto.
+int distanciaEnSaltos(const Maze& laberinto, int origen, int destino);
+
+// ^ BFS que encuentra el nodo mas cercano que cumple una condicion
+int buscarNodoMasCercano(const Maze& laberinto, int origen, std::function<bool(int)> condicion);
 
 class ExampleStateMachine;
 class ChaseScatterTransition;
@@ -89,6 +98,7 @@ public:
 
 // ^ Transición compartida entre Chase y Scatter, ahora si basada en tiempo 
 class ChaseScatterTransition:public FSMTransition{
+protected:
 	bool atChase; 
 	bool running; 
 	std::chrono::system_clock::time_point lastResume;

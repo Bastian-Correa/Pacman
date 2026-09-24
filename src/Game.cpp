@@ -20,6 +20,8 @@
 #include "SueController.h"
 #include "PacmanController.h"
 #include "PacmanDTController.h"
+#include "PinzaGhostController.h"
+#include "GuardianController.h"
 
 extern bool quick;
 extern bool nogui;
@@ -31,7 +33,7 @@ gv(std::make_unique<GameView>(std::vector<std::string>{"images/maze-a.png","imag
 
 	auto pacman=std::make_shared<MsPacMan>(gameState.getMaze().getPacmanStart());
 	gameState.addPacMan(pacman);
-	pacmanControl=std::make_shared<KeyboardController>(pacman);
+		pacmanControl=std::make_shared<PacmanDTController>(pacman);
 
 	std::vector<std::shared_ptr<Ghost>> ghosts;
 	for(int i=0;i<4;i++){
@@ -49,16 +51,30 @@ gv(std::make_unique<GameView>(std::vector<std::string>{"images/maze-a.png","imag
 	//* FSMController
 
 
-	ghostsControl.push_back(std::make_shared<BlinkyController>(ghosts[0]));
-	ghostsControl.push_back(std::make_shared<BlinkyController>(ghosts[1]));
-	ghostsControl.push_back(std::make_shared<PinkyController>(ghosts[2]));
-	ghostsControl.push_back(std::make_shared<BlinkyController>(ghosts[3]));
 
-	//  ghostsControl.push_back(std::make_shared<BlinkyController>(ghosts[0])); 	// implementar
-	//  ghostsControl.push_back(std::make_shared<InkyController>(ghosts[1])); 		// implementar
-	//  ghostsControl.push_back(std::make_shared<PinkyController>(ghosts[2]));		// implementar
-	//  ghostsControl.push_back(std::make_shared<SueController>(ghosts[3]));		// implementar
-}
+	// * CONFIGURACIÓN ACTIVA POR DEFECTO: los 4 fantasmas clasicos
+	
+	ghostsControl.push_back(std::make_shared<BlinkyController>(ghosts[0], std::make_pair(1000,-1000)));  // Blinky: esquina superior derecha
+	ghostsControl.push_back(std::make_shared<InkyController>(ghosts[1]));
+	ghostsControl.push_back(std::make_shared<PinkyController>(ghosts[2]));
+	ghostsControl.push_back(std::make_shared<SueController>(ghosts[3], std::make_pair(-1000,1000)));   // Sue: esquina inferior izquierda
+
+	
+	// * PARA PROBAR LOS 2 FANTASMAS DE AUTORIA PROPIA (Pinza/Guardian) y sigue estos pasos profe o Val: 
+
+	/*
+	 1) Comenta las 4 lineas de arriba 
+	 2) Descomenta las 4 lineas de abajo
+	 3) Haz el mismo cambio (comentar/descomentar el bloque equivalente) en GameView.cpp, para que los colores de los sprites coincidan
+   */
+
+	/*
+	ghostsControl.push_back(std::make_shared<BlinkyController>(ghosts[0], std::make_pair(1000,-1000)));
+	ghostsControl.push_back(std::make_shared<SueController>(ghosts[1], std::make_pair(-1000,1000)));
+	ghostsControl.push_back(std::make_shared<PinzaGhostController>(ghosts[2]));   // Fantasma Pinza
+	ghostsControl.push_back(std::make_shared<GuardianController>(ghosts[3]));     // Fantasma Guardian
+    */
+	}
 
 const int NOSCORELIMIT = 10000;
 void Game::run(){

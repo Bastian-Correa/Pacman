@@ -8,6 +8,57 @@
 #include "FSMController.h"
 #include <iostream>
 
+#include <queue>
+#include <unordered_set>
+
+int distanciaEnSaltos(const Maze& laberinto, int origen, int destino){
+	if(origen == destino) return 0;
+	std::queue<std::pair<int,int>> cola;
+	std::unordered_set<int> visitados;
+	cola.push(std::make_pair(origen, 0));
+	visitados.insert(origen);
+
+	while(!cola.empty()){
+		auto actual = cola.front();
+		cola.pop();
+		int nodo = actual.first;
+		int dist = actual.second;
+
+		for(int m=0; m<4; m++){
+			int vecino = laberinto.getNeighbour(nodo, static_cast<Move>(m));
+			if(vecino < 0) continue;
+			if(vecino == destino) return dist+1;
+			if(visitados.count(vecino)) continue;
+			visitados.insert(vecino);
+			cola.push(std::make_pair(vecino, dist+1));
+		}
+	}
+	return 1000000;
+}
+
+int buscarNodoMasCercano(const Maze& laberinto, int origen, std::function<bool(int)> condicion){
+	if(condicion(origen)) return origen;
+	std::queue<int> cola;
+	std::unordered_set<int> visitados;
+	cola.push(origen);
+	visitados.insert(origen);
+
+	while(!cola.empty()){
+		int nodo = cola.front();
+		cola.pop();
+
+		for(int m=0; m<4; m++){
+			int vecino = laberinto.getNeighbour(nodo, static_cast<Move>(m));
+			if(vecino < 0) continue;
+			if(visitados.count(vecino)) continue;
+			if(condicion(vecino)) return vecino;
+			visitados.insert(vecino);
+			cola.push(vecino);
+		}
+	}
+	return -1;
+}
+
 // ^ Ahora se implementa la maquina de estados
 FSMController::FSMController(std::shared_ptr<Character> character, std::pair<int,int> scatterCorner): 
 	Controller(character),

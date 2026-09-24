@@ -10,7 +10,7 @@ PacmanController::~PacmanController() {
 }
 
 Move
-PacmanController::getMove(const GameState& game){
+PacmanController::getMove(const GameState& /*game*/){
 
 	//para cerrar la ventana
 	SDL_Event e;

@@ -62,11 +62,28 @@ GameView::GameView(std::vector<std::string> mazeImages) {
 		mapTex.push_back(load(file));
 	}
 	pacTex=load("images/mspacman-right-normal.png");
+
+	
+	// * CONFIGURACIÓN ACTIVA POR DEFECTO: texturas de los 4 clasicos
+	
+	
+	ghostTex[0]=load("images/blinky-right-1.png");    // ghosts[0] = BlinkyController
+	ghostTex[1]=load("images/inky-right-1.png");      // ghosts[1] = InkyController
+	ghostTex[2]=load("images/pinky-right-1.png");     // ghosts[2] = PinkyController
+	ghostTex[3]=load("images/sue-right-1.png");       // ghosts[3] = SueController
+
+	
+	// * SI ACTIVASTE LOS FANTASMAS EXTRA EN Game.cpp (Pinza/Guardian),
+	// comenta las 4 lineas de arriba y descomenta estas 4:
+
+	/*
 	ghostTex[0]=load("images/blinky-right-1.png");
-	ghostTex[1]=load("images/inky-right-1.png");
-	ghostTex[2]=load("images/pinky-right-1.png");
-	ghostTex[3]=load("images/sue-right-1.png");
+	ghostTex[1]=load("images/sue-right-1.png");
+	ghostTex[2]=load("images/pinza-right-1.png");     // Fantasma Pinza 
+	ghostTex[3]=load("images/guardian-right-1.png");  // Fantasma Guardian
+	*/
 	edibleGhostTex=load("images/edible-ghost-1.png");
+
 }
 
 GameView::~GameView() {
